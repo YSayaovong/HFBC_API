@@ -1,0 +1,8 @@
+HFBC_API/
+  api/
+    main.py
+    requirements.txt
+  loader/
+    load_from_csv.py
+    requirements.txt
+  README.md
