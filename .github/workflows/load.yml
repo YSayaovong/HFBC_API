@@ -1,1 +1,20 @@
+name: Load DB from CSVs
 
+on:
+  workflow_dispatch: {}
+  schedule:
+    - cron: "0 6 * * 1"   # Mondays 06:00 UTC (adjust as desired)
+
+jobs:
+  load:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+      - run: pip install pandas==2.2.2 openpyxl==3.1.5 psycopg2-binary==2.9.9
+      - name: Run loader
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          SOURCE_BASE: https://raw.githubusercontent.com/YSayaovong/HFBC_Praise_Worship/main
+        run: python loader/load_from_csv.py
